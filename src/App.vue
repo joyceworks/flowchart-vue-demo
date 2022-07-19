@@ -17,7 +17,7 @@
     </div>
     <flowchart :nodes="nodes" :connections="connections" @editnode="handleEditNode"
                @dblclick="handleDblClick" @editconnection="handleEditConnection"
-               @save="handleChartSave" ref="chart">
+               @save="handleChartSave" ref="chart" @render="handleRender">
     </flowchart>
   </div>
 </template>
@@ -62,18 +62,6 @@ export default {
           approvers: [{id: 1, name: "Joyce"}],
           width: 120,
           height: 40,
-          bodyBackgroundColor() {
-            return 'green';
-          },
-          titleBackgroundColor() {
-            return 'green';
-          },
-          borderColor() {
-            return 'red';
-          },
-          textColor(isSelected) {
-            return isSelected ? 'gray' : 'blue';
-          }
         },
         {
           id: 4,
@@ -141,6 +129,10 @@ export default {
       //   this.connections = resp.data.connections;
       //   // Flowchart will refresh after this.nodes and this.connections changed
       // });
+    },
+    handleRender(node, children) {
+      console.log(node, children);
+      children.body.style("fill", 'red');
     },
     handleEditNode(node) {
       if (node.id === 2) {
